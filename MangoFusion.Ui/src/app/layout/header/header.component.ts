@@ -1,0 +1,13 @@
+import { Component } from "@angular/core";
+import { RouterLink } from "@angular/router";
+import { RoutePaths } from '../../shared/utility/route.paths';
+
+@Component({
+    selector:'app-header',
+    templateUrl:'./header.component.html',
+    styleUrls:['./header.component.css'],
+    imports: [RouterLink]
+})
+export class HeaderComponent{
+  routePaths = RoutePaths
+}
