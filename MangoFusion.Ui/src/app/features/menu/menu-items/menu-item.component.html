@@ -1,0 +1,27 @@
+<td>
+    <img src="{{baseUrl + menuItem().image}}" class="rounded" style="width:50px;height:50px;object-fit:cover" />
+</td>
+<td>
+    <strong>{{menuItem().name}}</strong>
+    <br />
+    <small class="text-muted">{{menuItem().description}}</small>
+</td>
+<td>
+    <span class="badge bg-secondary">{{menuItem().category}}</span>
+</td>
+<td>
+    <strong>₹{{menuItem().price}}</strong>
+</td>
+<td>
+    <span class="badge bg-warning text-dark">{{menuItem().specialTag}}</span>
+</td>
+<td>
+    <div class="btn-group" role="group">
+        <button class="btn btn-sm btn-outline-success" title="Edit">
+            <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger" title="Delete">
+            <i class="bi bi-trash"></i>
+        </button>
+    </div>
+</td>
