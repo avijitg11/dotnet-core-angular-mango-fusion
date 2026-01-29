@@ -1,0 +1,6 @@
+.drp {
+  min-width: 220px;
+  --bs-dropdown-link-active-bg: rgba(var(--bs-primary-rgb), 0.12);
+  --bs-dropdown-link-active-color: var(--bs-body-color);
+  --bs-dropdown-link-hover-bg: rgba(var(--bs-primary-rgb), 0.08);
+}
