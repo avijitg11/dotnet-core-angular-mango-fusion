@@ -1,5 +1,7 @@
 <td>
-    <img src="{{baseUrl + menuItem().image}}" class="rounded" style="width:50px;height:50px;object-fit:cover" />
+    <img src="{{baseUrl + menuItem().image}}"
+    (error)="$any($event.target).src = 'https://placehold.co/100'"
+    class="rounded" style="width:50px;height:50px;object-fit:cover" />
 </td>
 <td>
     <strong>{{menuItem().name}}</strong>
@@ -10,17 +12,17 @@
     <span class="badge bg-secondary">{{menuItem().category}}</span>
 </td>
 <td>
-    <strong>₹{{menuItem().price}}</strong>
+    <strong>₹{{menuItem().price.toFixed(2)}}</strong>
 </td>
 <td>
     <span class="badge bg-warning text-dark">{{menuItem().specialTag}}</span>
 </td>
 <td>
     <div class="btn-group" role="group">
-        <button class="btn btn-sm btn-outline-success" title="Edit">
+        <button class="btn btn-sm btn-outline-success" title="Edit" (click)="onEdit()">
             <i class="bi bi-pencil"></i>
         </button>
-        <button class="btn btn-sm btn-outline-danger" title="Delete">
+        <button class="btn btn-sm btn-outline-danger" title="Delete" (click)="onDelete()">
             <i class="bi bi-trash"></i>
         </button>
     </div>

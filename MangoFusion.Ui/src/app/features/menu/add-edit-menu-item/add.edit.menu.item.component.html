@@ -1,0 +1,93 @@
+<div class="modal fade show" style="display:block" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{menuItemForm.get('id')?.value === 0 ? 'Add New' : 'Update'}} Menu Item</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="hideModal()"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="menuItemForm" (ngSubmit)="onSubmit()">
+                    <input type="text" name="id" formControlName="id" style="display: none;"/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="name">Name <span style="color: red;">*</span></label>
+                                <input type="text" id="name" class="form-control" 
+                                formControlName="name" autocomplete="off" (blur)="onBlur('name')"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="category">Category <span style="color: red;">*</span></label>
+                                <select class="form-select" id="category" formControlName="category" 
+                                (blur)="onBlur('category')">
+                                    <option [value]="" disabled>Select Category</option>
+                                    @for(item of category; track item){
+                                        <option [value]="item">{{item}}</option>
+                                    }                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="description">Description</label>
+                        <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="price">Price <span style="color: red;">*</span> (₹)</label>
+                                <input type="number" id="price" class="form-control" step="0.01" min="0.01" 
+                                formControlName="price" (blur)="onBlur('price')"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="specialTag">Special Tag</label>
+                                <select class="form-select" id="specialTag" formControlName="specialTag">
+                                    <option value="" disabled>Select Special Tag</option>
+                                    @for(item of specialTags; track item){
+                                        <option [value]="item">{{item}}</option>
+                                    } 
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @if(imagePreview()){
+                            <img [src]="imagePreview()" class="rounded" style="width:50px;height:50px;object-fit:cover" />
+                        }
+                        @else{
+                            <img src="https://placehold.co/100" class="rounded" style="width:50px;height:50px;object-fit:cover" />
+                        }                      
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label" for="image">Image <span style="color: red;">*</span></label>
+                        <input type="file" class="form-control" id="image" accept="image/*" 
+                        (change)="onFileChange($event)" (blur)="onBlur('image')"/>
+                        <div class="form-text">
+                            Upload an image for the menu item
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-secondary" (click)="hideModal()">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary" [disabled]="menuItemForm.invalid">
+                            @if(showSpinner()){
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                            }
+                            @else{                                
+                                {{ menuItemForm.get('id')?.value === 0 ? 'CREATE' : 'UPDATE' }} MENU ITEM
+                            }                            
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show"></div>
