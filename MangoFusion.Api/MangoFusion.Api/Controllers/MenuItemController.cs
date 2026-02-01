@@ -75,6 +75,7 @@ namespace MangoFusion.Api.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         [Consumes("multipart/form-data")]
         public async Task<ActionResult<ApiResponse>> CreateMenuItem([FromForm] MenuItemCreateDTO menuItemCreateDTO)
         {
@@ -139,7 +140,8 @@ namespace MangoFusion.Api.Controllers
             return BadRequest(_response);
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
+        [AllowAnonymous]
         [Consumes("multipart/form-data")]
         public async Task<ActionResult<ApiResponse>> UpdateMenuItem(int id, [FromForm] MenuItemUpdateDTO menuItemUpdateDTO)
         {
@@ -217,7 +219,8 @@ namespace MangoFusion.Api.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpDelete("{id:int}", Name = "DeleteMenuItem")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> DeleteMenuItem(int id)
         {
             try

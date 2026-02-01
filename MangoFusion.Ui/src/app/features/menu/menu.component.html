@@ -8,7 +8,7 @@
                         Manage your restaurant's menu items
                     </p>
                 </div>
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" (click)="showModal()">
                     <i class="bi bi-plus-circle me-2"></i> Add Menu Item
                 </button>
             </div>
@@ -32,7 +32,7 @@
                             <p>An error occurred while loading menu items.</p>
                         </div>
                     }                    
-                    @else if(menuItemCount()===0){
+                    @else if(menuItems().length===0){
                         <div class="text-center py-5">
                             <i class="bi bi-basket text-muted" style="font-size:3rem"></i>
                             <h4 class="mt-3 text-muted">No Menu Items</h4>
@@ -53,8 +53,8 @@
                                     </tr>
                                 </thead>
                                 <tbody> 
-                                    @for (item of menuItems; track item.id){
-                                        <tr app-menu-item [menuItem]="item"></tr>                                                                   
+                                    @for (item of menuItems(); track item.id){
+                                        <tr app-menu-item [menuItem]="item" (isLoadMenuItems)="reloadMenuItems($event)" (menuItemId)="editItem($event)"></tr>                                                                   
                                     }                               
                                 </tbody>
                             </table>
@@ -64,5 +64,7 @@
             </div>
         </div>
     </div>
-    Menu Item Form Modal (Add/Edit)
+    @if(isModalShow()){
+        <app-add-edit-menu-item [menuItemId]="menuItemId()" (isModalShow)="hideModal($event)" (isLoadMenuItems)="reloadMenuItems($event)"></app-add-edit-menu-item>
+    }    
 </div>

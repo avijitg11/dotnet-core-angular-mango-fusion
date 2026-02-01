@@ -5,6 +5,6 @@ export type MenuItem = {
     category:string;
     specialTag:string;
     price: number;
-    image:string;
+    image: File | string | null;
     rating: number;
 }

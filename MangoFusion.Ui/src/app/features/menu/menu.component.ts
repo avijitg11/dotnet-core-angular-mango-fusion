@@ -1,30 +1,39 @@
-import { Component, inject, OnDestroy, OnInit, signal } from "@angular/core";
+import { Component, DestroyRef, inject, OnInit, signal } from "@angular/core";
 import { MenuItemComponent } from "./menu-items/menu-item.component";
 import { MenuItemService } from "../../core/services/menuitem.service";
 import { MenuItem } from "../../shared/models/menu.item";
 import { Subscription } from "rxjs";
+import { AddEditMenuItemComponent } from "./add-edit-menu-item/add.edit.menu.item.component";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector:'app-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.css'],
-    imports:[MenuItemComponent],
+    imports:[MenuItemComponent,AddEditMenuItemComponent],
     providers: [MenuItemService]
 })
-export class MenuComponent implements OnInit,OnDestroy{
-
+export class MenuComponent implements OnInit {
+    private destroyRef = inject(DestroyRef);
     menuItemService = inject(MenuItemService);
-    menuItems! : MenuItem[];
+    menuItems = signal<MenuItem[]>([]);
     menuItemSubscription! : Subscription;
-    menuItemCount = signal(0);
     isError = signal(false);
     showLoader = signal(true);
+    isModalShow = signal(false);
+    menuItemId = signal(0);
 
     ngOnInit(): void {
-        this.menuItemSubscription = this.menuItemService.getMenuItems().subscribe({
+        this.loadMenuItems();
+    }
+
+    private loadMenuItems(){
+        this.menuItemService.getMenuItems()
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
             next: (response) => {
                 if(response.isSuccess){
-                    this.menuItems = response.result;
+                    this.menuItems.set(response.result);
                 }
                 this.showLoader.set(false);
             },
@@ -34,18 +43,28 @@ export class MenuComponent implements OnInit,OnDestroy{
                 console.error(err);
             },
             complete: ()=>{
-                this.menuItemCount.set(this.menuItems.length);
                 this.showLoader.set(false);
             }      
         });
     }
 
-    ngOnDestroy(): void {
-        if (this.menuItemSubscription) {
-            this.menuItemSubscription.unsubscribe();
+    showModal(){
+        this.menuItemId.set(0);
+        this.isModalShow.set(true);
+    }
+
+    hideModal($event:boolean){
+        this.isModalShow.set($event);
+    }
+
+    reloadMenuItems($event:boolean){
+        if($event){
+            this.loadMenuItems();
         }
     }
 
-
-     
+    editItem($event:number){
+        this.menuItemId.set($event);
+        this.isModalShow.set(true);
+    }     
 }
