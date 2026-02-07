@@ -1,0 +1,246 @@
+@if(showLoader()){
+    <div class="container text-center py-5">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3">Loading menu item...</p>
+    </div>
+}
+@else if(isItemNotFound()){
+    <div class="container py-5">
+        <div class="alert alert-danger">
+            <h4>Invalid Menu Item ID</h4>
+            <p>
+                The menu item ID provided is not valid. Please check the URL and try again.
+            </p>
+            <button class="btn btn-danger">Back to Home</button>
+        </div>
+    </div>
+}
+@else if(isError()){
+    <div class="container py-5">
+        <div class="alert alert-danger">
+            <h4>Error Loading Menu Item</h4>
+            <p>
+                Menu item not found. It may have been removed or the ID is incorrect.
+            </p>
+            <button class="btn btn-danger">Back to Home</button>
+        </div>
+    </div>
+}
+@else{
+    <div class="container py-4">
+        <!-- {{"/* Breadcrumb Navigation */"}} -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#" class="text-decoration-none">
+                        <i class="bi bi-house-door me-1"></i>Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/" class="text-decoration-none">
+                    Menu
+                </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    NAME
+                </li>
+            </ol>
+        </nav>
+
+        <div class="row g-5">
+            <!-- {{"/* Product Image */"}} -->
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <div class="rounded-4 overflow-hidden shadow-lg border bg-body position-relative">
+                        <img class="img-fluid" src="{{baseUrl + menuItem()?.image}}"
+                        (error)="$any($event.target).src = 'https://placehold.co/100'"
+                        style="height:500px; width:100%; object-fit:cover"/>
+                        @if(menuItem()?.specialTag!==null && menuItem()?.specialTag !== ""){
+                            <div class="position-absolute top-0 start-0 m-3">
+                                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm fs-6">
+                                    {{menuItem()?.specialTag}}
+                                </span>
+                            </div>
+                        }                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- {{"/* Product Details */"}} -->
+            <div class="col-lg-6">
+                <div class="h-100 d-flex flex-column">
+                    <!-- {{"/* Header Section */"}} -->
+                    <div class="mb-4">
+                        <div class="d-flex align-items-start justify-content-between mb-3">
+                            <div>
+                                <h1 class="display-6 fw-bold mb-2 text-dark">{{menuItem()?.name}}</h1>
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-3 py-2 fs-6">
+                                        {{menuItem()?.category}}
+                                    </span>
+                                    <span class="text-success small fw-semibold">
+                                        <i class="bi bi-check-circle-fill me-1"></i>
+                                        Available
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <div class="h2 text-primary fw-bold mb-0">₹ {{menuItem()?.price}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- {{"/* Description */"}} -->
+                    <div class="mb-4">
+                        <h5 class="fw-semibold mb-3 text-muted small text-uppercase">
+                            Description
+                        </h5>
+                        <p class="text-muted lead mb-0" style="line-height:1.6">
+                            {{menuItem()?.description}}
+                        </p>
+                    </div>
+
+                    <!-- {{"/* Add to Cart Section */"}} -->
+                    <div class="mt-auto">
+                        <div class="card border-0">
+                            <div class="card-body p-4">
+                                <div class="row g-3 align-items-end">
+                                    <div class="col-sm-5">
+                                        <label class="form-label fw-semibold text-muted small text-uppercase mb-2">
+                                            Quantity
+                                        </label>
+                                        <div class="input-group">
+                                            <button class="btn btn-outline-secondary" type="button" (click)="onMinusQuantity()">
+                                                <i class="bi bi-dash"></i>
+                                            </button>
+                                            <!-- <input type="number" class="form-control text-center fw-semibold" 
+                                            min="1" max="10" value="{{quantity()}}"/> -->
+                                            <span class="form-control text-center fw-semibold">
+                                                {{quantity()}}
+                                            </span>
+                                            <button class="btn btn-outline-secondary" type="button" (click)="onPlusQuantity()">
+                                                <i class="bi bi-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="d-grid gap-2">
+                                            <button class="btn btn-primary btn-lg fw-semibold shadow-sm">
+                                                <i class="bi bi-cart-plus me-2"></i> Add to Cart -
+                                            </button>
+
+                                            <button class="btn btn-outline-primary">
+                                                <i class="bi bi-arrow-left me-2"></i> Continue Shopping
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3 p-3  rounded border">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <small class="text-muted">Subtotal (₹)</small>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <span class="fw-bold text-primary h5 mb-0">
+                                                {{subTotal()}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- {{"/* Additional Info Cards */"}} -->
+                        <div class="row g-3 mt-3">
+                            <div class="col-md-6">
+                                <div class="card border-0 bg-success-subtle">
+                                    <div class="card-body p-3 text-center">
+                                        <i class="bi bi-clock text-success mb-2 d-block" style="font-size:1.5rem"></i>
+                                        <small class="fw-semibold text-success">
+                                            Ready in 15-20 mins
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-0 bg-info-subtle">
+                                    <div class="card-body p-3 text-center">
+                                        <i class="bi bi-geo-alt text-info mb-2 d-block" style="font-size:1.5rem"></i>
+                                        <small class="fw-semibold text-info">
+                                            Free Pickup
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- {{"/* Product Information Card */"}} -->
+        <div class="row mt-5">
+            <div class="col">
+                <div class="card border shadow-sm">
+                    <div class="card-header bg-primary-subtle">
+                        <h5 class="fw-bold mb-0 text-primary">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Product Information
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4 text-center">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="border-end border-light-subtle pe-3">
+                                    <i class="bi bi-tag text-secondary mb-2 d-block" style="font-size:1.5rem"></i>
+                                    <div class="text-muted text-uppercase fw-semibold small mb-1">
+                                        Category
+                                    </div>
+                                    <div class="fw-semibold">
+                                        {{menuItem()?.category}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="border-end border-light-subtle pe-3">
+                                    <i class="bi bi-star text-warning mb-2 d-block" style="font-size:1.5rem"></i>
+                                    <div class="text-muted text-uppercase fw-semibold small mb-1">
+                                        Special Tag
+                                    </div>
+                                    @if(menuItem()?.specialTag!==null && menuItem()?.specialTag !== "")
+                                    {
+                                        <div class="fw-semibold">{{menuItem()?.specialTag}}</div>
+                                    }                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="border-end border-light-subtle pe-3">
+                                    <i class="bi bi-currency-rupee text-success mb-2 d-block" style="font-size:1.5rem"></i>
+                                    <div class="text-muted text-uppercase fw-semibold small mb-1">
+                                        Price
+                                    </div>
+                                    <div class="text-primary fw-bold">
+                                        {{menuItem()?.price}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <i class="bi bi-check-circle text-success mb-2 d-block" style="font-size:1.5rem"></i>
+                                <div class="text-muted text-uppercase fw-semibold small mb-1">
+                                    Availability
+                                </div>
+                                <div class="text-success fw-semibold">In Stock</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

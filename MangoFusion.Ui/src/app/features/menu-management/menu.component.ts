@@ -1,9 +1,8 @@
 import { Component, DestroyRef, inject, OnInit, signal } from "@angular/core";
-import { MenuItemComponent } from "./menu-items/menu-item.component";
+import { MenuItemComponent } from "./menu-item/menu-item.component";
 import { MenuItemService } from "../../core/services/menuitem.service";
 import { MenuItem } from "../../shared/models/menu.item";
-import { Subscription } from "rxjs";
-import { AddEditMenuItemComponent } from "./add-edit-menu-item/add.edit.menu.item.component";
+import { AddEditMenuItemComponent } from "./add-edit-menu-item/app-add-edit-menu-item.component";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
@@ -17,7 +16,6 @@ export class MenuComponent implements OnInit {
     private destroyRef = inject(DestroyRef);
     menuItemService = inject(MenuItemService);
     menuItems = signal<MenuItem[]>([]);
-    menuItemSubscription! : Subscription;
     isError = signal(false);
     showLoader = signal(true);
     isModalShow = signal(false);
@@ -40,7 +38,6 @@ export class MenuComponent implements OnInit {
             error: (err)=>{
                 this.isError.set(true);
                 this.showLoader.set(false);
-                console.error(err);
             },
             complete: ()=>{
                 this.showLoader.set(false);
@@ -53,18 +50,18 @@ export class MenuComponent implements OnInit {
         this.isModalShow.set(true);
     }
 
-    hideModal($event:boolean){
-        this.isModalShow.set($event);
+    hideModal(event:boolean){
+        this.isModalShow.set(event);
     }
 
-    reloadMenuItems($event:boolean){
-        if($event){
+    reloadMenuItems(event:boolean){
+        if(event){
             this.loadMenuItems();
         }
     }
 
-    editItem($event:number){
-        this.menuItemId.set($event);
+    editItem(event:number){
+        this.menuItemId.set(event);
         this.isModalShow.set(true);
     }     
 }
