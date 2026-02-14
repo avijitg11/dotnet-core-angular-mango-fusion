@@ -3,13 +3,12 @@ import { MenuItemService } from "../../core/services/menuitem.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MenuItem } from "../../shared/models/menu.item";
 import { MenuItemComponent } from "./menu-item/menu-item.component";
-import { Category } from "../../shared/utility/category";
+import { Category } from "../../shared/models/category";
 
 @Component({
     selector:'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css'],
-    providers:[MenuItemService],
     imports:[MenuItemComponent]
 })
 export class HomeComponent implements OnInit {

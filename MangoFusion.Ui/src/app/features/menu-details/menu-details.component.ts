@@ -9,8 +9,7 @@ import { ToastrService } from "ngx-toastr";
 @Component({
     selector:'app-menu-details',
     templateUrl:'./menu-details.component.html',
-    styleUrls:['./menu-details.component.css'],
-    providers:[MenuItemService]
+    styleUrls:['./menu-details.component.css']
 })
 export class MenuDetailsComponent implements OnInit{
     menuItem = signal<MenuItem | null>(null);

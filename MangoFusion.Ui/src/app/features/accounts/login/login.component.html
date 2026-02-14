@@ -1,1 +1,81 @@
-<h1>Login</h1>
+<div class="min-vh-100 d-flex align-items-center bg-body-tertiary py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center justify-content-center">
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="text-center px-4">
+                    <div class="mb-4">
+                        <i class="bi bi-basket text-primary" style="font-size:4rem"></i>
+                    </div>
+                    <h2 class="fw-bold mb-3">Welcome to MangoFusion</h2>
+                    <p class="text-muted mb-4">
+                        Sign in to explore fresh flavors, manage your cart, and place your orders seamlessly.
+                    </p>
+                    <div class="text-start mx-auto" style="max-width:360px">
+                        <div class="d-flex mb-2 small">
+                            <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                            <span>Secure account access</span>
+                        </div>
+                        <div class="d-flex mb-2 small">
+                            <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                            <span>Track past orders</span>
+                        </div>
+                        <div class="d-flex mb-2 small">
+                            <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                            <span>Save your favorites</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="border rounded-4 shadow-sm p-4 p-lg-5">
+                    <div class="mb-4 text-center">
+                        <h3 class="fw-bold mb-1">Sign In</h3>
+                        <p class="text-muted small mb-0">Access your account</p>
+                    </div>
+
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" 
+                            name="email" placeholder="name@example.com" 
+                            formControlName="email" (blur)="onBlur('email')"/>
+                            <label for="email">Email address <span style="color: red;">*</span></label>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <div class="form-floating flex-grow-1">
+                                    <input type="password" class="form-control" 
+                                    id="password" name="password" placeholder="Password" 
+                                    formControlName="password" (blur)="onBlur('password')" />
+                                    <label for="password">Password <span style="color: red;">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2 mb-3"
+                        [disabled]="loginForm.invalid">
+                            @if(showSpinner()){
+                                <span class="spinner-border spinner-border-sm me-2" role="status"></span> 
+                                Signing In...
+                            }
+                            @else{
+                                Sign In
+                            }
+                        </button>
+                    </form>
+                    <div class="text-center small">
+                        <span class="text-muted">No account? </span>
+                        <a routerLink="{{'/'+routePaths.REGISTER}}" class="fw-semibold">
+                            Create one
+                        </a>
+                    </div>
+                    <div class="text-center mt-3 small">
+                        <a routerLink="{{routePaths.HOME}}" class="text-decoration-none">
+                            <i class="bi bi-arrow-left me-1"></i>Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
