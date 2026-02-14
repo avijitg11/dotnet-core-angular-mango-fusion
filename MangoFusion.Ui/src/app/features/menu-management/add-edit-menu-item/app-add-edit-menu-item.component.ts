@@ -1,7 +1,7 @@
 import { Component, inject, output, signal, DestroyRef, input, effect } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { Category } from "../../../shared/utility/category";
-import { SpecialTags } from "../../../shared/utility/special.tags";
+import { Category } from "../../../shared/models/category";
+import { SpecialTags } from "../../../shared/models/special.tags";
 import { ToastrService } from 'ngx-toastr';
 import { MenuItemService } from "../../../core/services/menuitem.service";
 import Swal from 'sweetalert2';
@@ -113,37 +113,37 @@ export class AddEditMenuItemComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
             next:(response)=> {
+                let title = '';
+                let text = '';
                 if(response.isSuccess && response.statusCode === 201)
                 {
-                    Swal.fire({
-                        title: "Item saved!",
-                        text: "Menu item saved successfully!",
-                        icon: "success",
-                        confirmButtonColor: '#0d6efd'
-                    });
+                    title = "Item saved!";
+                    text = "Menu item saved successfully!";
                 }
                 else if(response.isSuccess && response.statusCode !== 201){
-                    Swal.fire({
-                        title: "Item updated!",
-                        text: "Menu item updated successfully!",
-                        icon: "success",
-                        confirmButtonColor: '#0d6efd'
-                    });
-                }
-                else if(!response.isSuccess){
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: response.errorMessage.join(' | '),
-                        confirmButtonColor: '#fd0d0d'
-                    });
-                }               
+                    title = "Item updated!";
+                    text = "Menu item updated successfully!"
+                }   
+                Swal.fire({
+                    title,
+                    text,
+                    icon: "success",
+                    confirmButtonColor: '#0d6efd'
+                });            
             },
             error:(err)=>{
+                let message = '';
+                if (err.status === 401) {
+                    message = "You are unauthorized.";
+                } else if (Array.isArray(err.error?.errorMessage)) {
+                    message = err.error.errorMessage.join(' | ');
+                } else {
+                    message = err.error?.errorMessage || "Something went wrong.";
+                }
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: "Something went wrong!",
+                    text: message,
                     confirmButtonColor: '#fd0d0d'
                 });
                 this.showSpinner.set(false);

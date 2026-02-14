@@ -3,6 +3,7 @@ import { MenuItem } from "../../../shared/models/menu.item";
 import { environment } from "../../../../environments/environment";
 import Swal from 'sweetalert2';
 import { MenuItemService } from "../../../core/services/menuitem.service";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector:'[app-menu-item]',
@@ -28,7 +29,8 @@ export class MenuItemComponent{
             confirmButtonText: "Yes, delete it!"
             }).then((result) => {
             if (result.isConfirmed) {
-                const subscriptions = this.menuItemService.deleteMenuItem(this.menuItem().id).subscribe({
+                this.menuItemService.deleteMenuItem(this.menuItem().id)
+                .pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
                     next:(response)=>{
                         if(response.isSuccess){
                             Swal.fire({
@@ -37,28 +39,27 @@ export class MenuItemComponent{
                                 icon: "success",
                                 confirmButtonColor: '#0d6efd'
                             });
-                        }else if(!response.isSuccess){
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: response.errorMessage.join(' | '),
-                                confirmButtonColor: '#fd0d0d'
-                            });
                         }
                         this.isLoadMenuItems.emit(true);
                     },
                     error:(err)=> {
-                        console.log(err);
+                        let message = '';
+                        if (err.status === 401) {
+                            message = "You are unauthorized.";
+                        } else if (Array.isArray(err.error?.errorMessage)) {
+                            message = err.error.errorMessage.join(' | ');
+                        } else {
+                            message = err.error?.errorMessage || "Something went wrong.";
+                        }
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",
-                            text: "Something went wrong!",
+                            text: message,
                             confirmButtonColor: '#fd0d0d'
                         });
                         this.isLoadMenuItems.emit(true);
                     },
-                });
-                this.destroyRef.onDestroy(()=>subscriptions.unsubscribe());                
+                });             
             }
         });
     }

@@ -36,53 +36,58 @@
                 </span>
               </a>
             </li>
-
-            <li class="nav-item dropdown">
-              <button class="nav-link dropdown-toggle btn btn-link d-flex align-items-center gap-2"
-                data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <i class="bi bi-person-circle fs-5 text-primary"></i>
-                <span class="text-truncate" style="max-width:120px;">
-                  Hello
-                </span>
-              </button>
-              <ul class="drp dropdown-menu dropdown-menu-end shadow border rounded-3 p-2 small">
-                <li>
-                  <a
-                    href="#"
-                    class="dropdown-item d-flex align-items-center gap-2 rounded-2"
-                  >
-                    <i class="bi bi-speedometer2 text-primary"></i>
-                    <span>Order Management</span>
-                  </a>
-                </li>
-                <li>
-                  <a routerLink="{{routePaths.MENU_MANAGEMENT}}"class="dropdown-item d-flex align-items-center gap-2 rounded-2">
-                    <i class="bi bi-list-ul text-primary"></i>
-                    <span>Menu Management</span>
-                  </a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider my-2" />
-                </li>
-                <li>
-                  <button class="dropdown-item d-flex align-items-center gap-2 text-danger rounded-2">
-                    <i class="bi bi-box-arrow-right"></i>
-                    <span>Logout</span>
-                  </button>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a routerLink="{{routePaths.LOGIN}}" class="nav-link">
-                Login
-              </a>
-            </li>
-            <li class="nav-item">
-              <a routerLink="{{routePaths.REGISTER}}" class="nav-link">
-                Register
-              </a>
-            </li>
+            @if(authState().isAuthenticated){
+               <li class="nav-item dropdown">
+                <button class="nav-link dropdown-toggle btn btn-link d-flex align-items-center gap-2"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="bi bi-person-circle fs-5 text-primary"></i>
+                  <span class="text-truncate" style="max-width:120px;">
+                    Hello, {{authState().user?.fullname}}
+                  </span>
+                </button>
+                <ul class="drp dropdown-menu dropdown-menu-end shadow border rounded-3 p-2 small">
+                  <li>
+                    <a
+                      href="#"
+                      class="dropdown-item d-flex align-items-center gap-2 rounded-2"
+                    >
+                      <i class="bi bi-speedometer2 text-primary"></i>
+                      <span>Order Management</span>
+                    </a>
+                  </li>
+                  @if(authState().user?.role === userRoles[1]){
+                    <li>
+                      <a routerLink="{{routePaths.MENU_MANAGEMENT}}"class="dropdown-item d-flex align-items-center gap-2 rounded-2">
+                        <i class="bi bi-list-ul text-primary"></i>
+                        <span>Menu Management</span>
+                      </a>
+                    </li>
+                  }                  
+                  <li>
+                    <hr class="dropdown-divider my-2" />
+                  </li>
+                  <li>
+                    <button class="dropdown-item d-flex align-items-center gap-2 text-danger rounded-2" (click)="onLogout()">
+                      <i class="bi bi-box-arrow-right"></i>
+                      <span>Logout</span>
+                    </button>
+                  </li>
+                </ul>
+              </li>
+            }
+            @else {
+              <li class="nav-item">
+                <a routerLink="{{routePaths.LOGIN}}" class="nav-link">
+                  Login
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="{{routePaths.REGISTER}}" class="nav-link">
+                  Register
+                </a>
+              </li>
+            }          
            
           </ul>
         </div>

@@ -9,8 +9,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
     selector:'app-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.css'],
-    imports:[MenuItemComponent,AddEditMenuItemComponent],
-    providers: [MenuItemService]
+    imports:[MenuItemComponent,AddEditMenuItemComponent]
 })
 export class MenuComponent implements OnInit {
     private destroyRef = inject(DestroyRef);
