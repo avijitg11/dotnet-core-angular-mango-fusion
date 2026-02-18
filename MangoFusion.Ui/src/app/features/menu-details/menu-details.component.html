@@ -30,16 +30,15 @@
 }
 @else{
     <div class="container py-4">
-        <!-- {{"/* Breadcrumb Navigation */"}} -->
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#" class="text-decoration-none">
+                    <a routerLink="{{routePaths.HOME}}" class="text-decoration-none">
                         <i class="bi bi-house-door me-1"></i>Home
                     </a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="/" class="text-decoration-none">
+                    <a routerLink="{{routePaths.HOME}}" class="text-decoration-none">
                     Menu
                 </a>
                 </li>
@@ -50,17 +49,16 @@
         </nav>
 
         <div class="row g-5">
-            <!-- {{"/* Product Image */"}} -->
             <div class="col-lg-6">
                 <div class="position-relative">
                     <div class="rounded-4 overflow-hidden shadow-lg border bg-body position-relative">
-                        <img class="img-fluid" src="{{baseUrl + menuItem()?.image}}"
+                        <img class="img-fluid" src="{{baseUrl + menuItem().image}}"
                         (error)="$any($event.target).src = 'https://placehold.co/100'"
                         style="height:500px; width:100%; object-fit:cover"/>
-                        @if(menuItem()?.specialTag!==null && menuItem()?.specialTag !== ""){
+                        @if(menuItem().specialTag!==null && menuItem().specialTag !== ""){
                             <div class="position-absolute top-0 start-0 m-3">
                                 <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm fs-6">
-                                    {{menuItem()?.specialTag}}
+                                    {{menuItem().specialTag}}
                                 </span>
                             </div>
                         }                        
@@ -68,17 +66,15 @@
                 </div>
             </div>
 
-            <!-- {{"/* Product Details */"}} -->
             <div class="col-lg-6">
                 <div class="h-100 d-flex flex-column">
-                    <!-- {{"/* Header Section */"}} -->
                     <div class="mb-4">
                         <div class="d-flex align-items-start justify-content-between mb-3">
                             <div>
-                                <h1 class="display-6 fw-bold mb-2 text-dark">{{menuItem()?.name}}</h1>
+                                <h1 class="display-6 fw-bold mb-2 text-dark">{{menuItem().name}}</h1>
                                 <div class="d-flex align-items-center gap-3 mb-2">
                                     <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-3 py-2 fs-6">
-                                        {{menuItem()?.category}}
+                                        {{menuItem().category}}
                                     </span>
                                     <span class="text-success small fw-semibold">
                                         <i class="bi bi-check-circle-fill me-1"></i>
@@ -87,22 +83,20 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <div class="h2 text-primary fw-bold mb-0">₹ {{menuItem()?.price}}</div>
+                                <div class="h2 text-primary fw-bold mb-0">₹ {{menuItem().price.toFixed(2)}}</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- {{"/* Description */"}} -->
                     <div class="mb-4">
                         <h5 class="fw-semibold mb-3 text-muted small text-uppercase">
                             Description
                         </h5>
                         <p class="text-muted lead mb-0" style="line-height:1.6">
-                            {{menuItem()?.description}}
+                            {{menuItem().description}}
                         </p>
                     </div>
 
-                    <!-- {{"/* Add to Cart Section */"}} -->
                     <div class="mt-auto">
                         <div class="card border-0">
                             <div class="card-body p-4">
@@ -115,8 +109,6 @@
                                             <button class="btn btn-outline-secondary" type="button" (click)="onMinusQuantity()">
                                                 <i class="bi bi-dash"></i>
                                             </button>
-                                            <!-- <input type="number" class="form-control text-center fw-semibold" 
-                                            min="1" max="10" value="{{quantity()}}"/> -->
                                             <span class="form-control text-center fw-semibold">
                                                 {{quantity()}}
                                             </span>
@@ -127,11 +119,11 @@
                                     </div>
                                     <div class="col-sm-7">
                                         <div class="d-grid gap-2">
-                                            <button class="btn btn-primary btn-lg fw-semibold shadow-sm">
-                                                <i class="bi bi-cart-plus me-2"></i> Add to Cart -
+                                            <button class="btn btn-primary btn-lg fw-semibold shadow-sm" (click)="onAddToCart()">
+                                                <i class="bi bi-cart-plus me-2"></i> Add to Cart
                                             </button>
 
-                                            <button class="btn btn-outline-primary">
+                                            <button class="btn btn-outline-primary" routerLink="{{routePaths.HOME}}">
                                                 <i class="bi bi-arrow-left me-2"></i> Continue Shopping
                                             </button>
                                         </div>
@@ -152,7 +144,6 @@
                             </div>
                         </div>
 
-                        <!-- {{"/* Additional Info Cards */"}} -->
                         <div class="row g-3 mt-3">
                             <div class="col-md-6">
                                 <div class="card border-0 bg-success-subtle">
@@ -180,7 +171,6 @@
             </div>
         </div>
 
-        <!-- {{"/* Product Information Card */"}} -->
         <div class="row mt-5">
             <div class="col">
                 <div class="card border shadow-sm">
@@ -199,7 +189,7 @@
                                         Category
                                     </div>
                                     <div class="fw-semibold">
-                                        {{menuItem()?.category}}
+                                        {{menuItem().category}}
                                     </div>
                                 </div>
                             </div>
@@ -209,9 +199,9 @@
                                     <div class="text-muted text-uppercase fw-semibold small mb-1">
                                         Special Tag
                                     </div>
-                                    @if(menuItem()?.specialTag!==null && menuItem()?.specialTag !== "")
+                                    @if(menuItem().specialTag!==null && menuItem().specialTag !== "")
                                     {
-                                        <div class="fw-semibold">{{menuItem()?.specialTag}}</div>
+                                        <div class="fw-semibold">{{menuItem().specialTag}}</div>
                                     }                                    
                                 </div>
                             </div>
@@ -222,7 +212,7 @@
                                         Price
                                     </div>
                                     <div class="text-primary fw-bold">
-                                        {{menuItem()?.price}}
+                                        {{menuItem().price.toFixed(2)}}
                                     </div>
                                 </div>
                             </div>

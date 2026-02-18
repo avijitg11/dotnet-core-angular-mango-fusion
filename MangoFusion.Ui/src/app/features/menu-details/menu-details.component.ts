@@ -3,28 +3,43 @@ import { environment } from "../../../environments/environment";
 import { MenuItem } from "../../shared/models/menu.item";
 import { MenuItemService } from "../../core/services/menuitem.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
+import { RoutePaths } from "../../shared/models/route.path";
+import { CartItem } from "../../shared/models/cart.item";
+import { CartService } from "../../core/services/cart.service";
 
 @Component({
     selector:'app-menu-details',
     templateUrl:'./menu-details.component.html',
-    styleUrls:['./menu-details.component.css']
+    styleUrls:['./menu-details.component.css'],
+    imports:[RouterLink]
 })
 export class MenuDetailsComponent implements OnInit{
-    menuItem = signal<MenuItem | null>(null);
-    baseUrl = environment.apiUrl;
     private destroyRef = inject(DestroyRef);
     private menuItemService = inject(MenuItemService);
+    private cartService = inject(CartService);
     private route = inject(ActivatedRoute);
     private toastr = inject(ToastrService);
+    private price = 0;
+    baseUrl = environment.apiUrl;
+    routePaths = RoutePaths;
     isItemNotFound = signal(false);
     isError = signal(false);
     showLoader = signal(true);
     quantity = signal(1);
     subTotal = signal(1);
-    private price = 0;
-
+    menuItem = signal<MenuItem>({
+        id: 0,
+        name: '',
+        price: 0,
+        image: '',
+        category:'',
+        description:'',
+        rating:0,
+        specialTag:''
+    });;
+    
     ngOnInit(): void {
         const id = Number(this.route.snapshot.paramMap.get('id') ?? 0);
         this.menuItemService.getMenuItemById(id)
@@ -80,5 +95,17 @@ export class MenuDetailsComponent implements OnInit{
         else{
             this.toastr.info('You can not reduce less than 1.');
         }            
+    }
+
+    onAddToCart(){
+        const cartItem : CartItem = {
+            id:this.menuItem().id,
+            name:this.menuItem().name,
+            image:this.menuItem().image,
+            price:this.menuItem().price,
+            quantity:this.quantity(),
+            isQuantityFixed:true
+        }
+        this.cartService.addToCart(cartItem);
     }
 }
