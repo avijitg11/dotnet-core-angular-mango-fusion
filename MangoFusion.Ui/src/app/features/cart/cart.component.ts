@@ -1,10 +1,9 @@
 import { Component, computed, DestroyRef, inject, signal } from "@angular/core";
 import { CartService } from "../../core/services/cart.service";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { RoutePaths } from "../../shared/models/route.path";
 import { CartItemComponent } from "./cart-item/cart-item.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { PickupDetails } from "../../shared/models/pickup.details";
 import { ToastrService } from "ngx-toastr";
 import { AuthService } from "../../core/services/auth.service";
 import { OrderService } from "../../core/services/order.service";
@@ -23,6 +22,7 @@ export class CartComponent{
     private toastr = inject(ToastrService);
     private authService = inject(AuthService); 
     private orderService = inject(OrderService);
+    private router = inject(Router); 
     cartService = inject(CartService);
     authState = this.authService.authState;
     routePaths = RoutePaths;
@@ -86,7 +86,6 @@ export class CartComponent{
             orderDetailsDTO: OrderDetailsDTO
         };
 
-        console.log(order);
         this.orderService.createOrder(order)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
@@ -100,6 +99,15 @@ export class CartComponent{
                         confirmButtonColor: '#0d6efd'
                     });
                     this.cartService.clearCart(false);
+                    this.orderService.showOrderConformation.set(true);
+                    this.orderService.orderConfirmedDetails.set({
+                        orderId:response.result.orderHeaderId,
+                        email:order.pickUpEmail,
+                        numberOfItems:order.totalItem,
+                        phoneNumber:order.pickUpPhoneNumber,
+                        pickupName:order.pickUpPhoneNumber
+                    });
+                    this.router.navigate([this.routePaths.ORDER_CONFORMATION]);  
                 }                                    
             },
             error:(err)=>{

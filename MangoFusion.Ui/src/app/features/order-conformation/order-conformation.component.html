@@ -1,0 +1,45 @@
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="text-center mb-4">
+                <div class="mb-3">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size:3rem"></i>
+                </div>
+                <h2 class="fw-bold text-success mb-2">Order Confirmed!</h2>
+                <p class="text-muted">Thank you for your order.</p>
+            </div>
+
+            <div class="card border shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4 text-center">Order Details</h5>
+                    <hr/>
+                    <div class="mb-3">
+                        <strong>Order ID:</strong> # {{orderConfirmedDetails.orderId}}
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Pickup Name:</strong> {{orderConfirmedDetails.pickupName}}
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Email:</strong> {{orderConfirmedDetails.email}}
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Phone Number:</strong> {{orderConfirmedDetails.phoneNumber}}
+                    </div>
+
+                    <div class="mb-4">
+                        <strong>Number of Items:</strong> {{orderConfirmedDetails.numberOfItems}}
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary" routerLink="{{routePaths.HOME}}">
+                            Continue Shopping
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
