@@ -6,12 +6,12 @@ import { AddEditMenuItemComponent } from "./add-edit-menu-item/add-edit-menu-ite
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
-    selector:'app-menu',
-    templateUrl: './menu.component.html',
-    styleUrls: ['./menu.component.css'],
+    selector:'app-menu-management',
+    templateUrl: './menu-management.component.html',
+    styleUrls: ['./menu-management.component.css'],
     imports:[MenuItemComponent,AddEditMenuItemComponent]
 })
-export class MenuComponent implements OnInit {
+export class MenuManagementComponent implements OnInit {
     private destroyRef = inject(DestroyRef);
     menuItemService = inject(MenuItemService);
     menuItems = signal<MenuItem[]>([]);
