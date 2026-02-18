@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, OnInit, signal } from "@angular/core";
 import { MenuItemComponent } from "./menu-item/menu-item.component";
 import { MenuItemService } from "../../core/services/menuitem.service";
 import { MenuItem } from "../../shared/models/menu.item";
-import { AddEditMenuItemComponent } from "./add-edit-menu-item/app-add-edit-menu-item.component";
+import { AddEditMenuItemComponent } from "./add-edit-menu-item/add-edit-menu-item.component";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({

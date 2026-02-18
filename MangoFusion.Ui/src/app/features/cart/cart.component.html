@@ -1,0 +1,118 @@
+@if(cartService.cartItemList().length === 0){
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="display-4 mb-3 text-muted">
+                    <i class="bi bi-cart"></i>
+                </div>
+                <h3 class="mb-3">Your cart is empty</h3>
+                <p class="text-muted mb-4">
+                    Looks like you haven't added any items yet.
+                </p>
+                <a routerLink="{{routePaths.HOME}}" class="btn btn-primary btn-lg">
+                Browse Menu
+                </a>
+            </div>
+        </div>
+    </div>
+}
+@else {
+    <div class="container-fluid p-4" style="min-height:100vh">
+        <div class="row g-4 pt-3">
+            <div class="col-lg-8">
+                <div class="card rounded shadow-sm">
+                    <div class="p-4 border-bottom">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold mb-0">
+                                <i class="bi bi-cart3 me-2"></i>
+                                Your Shopping Cart
+                            </h5>
+                            <div class="text-muted small">
+                                <i class="bi bi-info-circle me-1"></i> Review and modify your order
+                            </div>
+                        </div>
+                    </div>
+                    @for (item of cartService.cartItemList(); track item.id){
+                        <div app-cart-item [cartItem]="item"></div>     
+                    }                           
+                    <div class="p-4 border-top border-bottom">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold h6 mb-0">
+                                <i class="bi bi-calculator me-2"></i>
+                                Cart Total ({{totalCartItem()}} items)
+                            </span>
+                            <span class="fw-bold text-primary h4 mb-0">₹ {{totalCartAmount()}}</span>
+                        </div>
+                    </div>
+                    <div class="border-top p-4">
+                        <div class="d-flex gap-3 justify-content-center">
+                            <a routerLink="{{routePaths.HOME}}" class="btn btn-outline-secondary px-4 rounded-pill">
+                                <i class="bi bi-arrow-left me-2"></i> Continue Shopping
+                            </a>
+                            <button class="btn btn-outline-danger px-4 rounded-pill" (click)="onClearCart()">
+                                <i class="bi bi-trash3 me-2"></i> Clear Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4" style="z-index: 1;">
+                <div class="sticky-top" style="top:20px">
+                    <form [formGroup]="pickupDetailsForm" (ngSubmit)="onSubmit()">
+                        <div class="card rounded shadow-sm">
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <h5 class="fw-bold mb-3">
+                                        <i class="bi bi-person-check me-2"></i>
+                                        Pickup Details
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="pickUpName" 
+                                                formControlName="fullName" autocomplete="off" (blur)="onBlur('fullName')" placeholder="Full Name" />
+                                                <label for="pickUpName">Full Name <span style="color: red;">*</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <input type="tel" class="form-control" id="pickUpPhoneNumber" 
+                                                formControlName="phoneNumber" autocomplete="off" (blur)="onBlur('phoneNumber')" placeholder="Phone Number" />
+                                                <label for="pickUpPhoneNumber">
+                                                    Phone Number <span style="color: red;">*</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <input type="email" class="form-control" id="pickUpEmail" 
+                                                formControlName="email" autocomplete="off" (blur)="onBlur('email')" placeholder="Email" />
+                                                <label for="pickUpEmail">Email Address <span style="color: red;">*</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-lg" type="submit" [disabled]="pickupDetailsForm.invalid">
+                                        @if(isShowSpinner()){
+                                            <span class="spinner-border spinner-border-sm me-2"></span> Processing...
+                                        }
+                                        @else {
+                                            <i class="bi bi-credit-card me-2"></i> Place Order (₹ {{totalCartAmount()}})
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="border-top p-4">
+                                <div class="alert alert-info small mb-0">
+                                    <i class="bi bi-clock me-2"></i>
+                                    <strong>Ready in 15-20 mins</strong> after order confirmation
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
