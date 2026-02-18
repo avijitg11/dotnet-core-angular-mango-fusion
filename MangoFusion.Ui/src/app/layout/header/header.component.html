@@ -44,30 +44,31 @@
                   aria-expanded="false">
                   <i class="bi bi-person-circle fs-5 text-primary"></i>
                   <span class="text-truncate" style="max-width:120px;">
-                    Hello, {{authState().user?.fullname}}
+                    Hello, {{authState().user?.fullname?.split(' ')?.at(0)}}
                   </span>
                 </button>
                 <ul class="drp dropdown-menu dropdown-menu-end shadow border rounded-3 p-2 small">
-                  <li>
-                    <a
-                      href="#"
-                      class="dropdown-item d-flex align-items-center gap-2 rounded-2"
-                    >
-                      <i class="bi bi-speedometer2 text-primary"></i>
-                      <span>Order Management</span>
-                    </a>
-                  </li>
+                  
                   @if(authState().user?.role === userRoles[1]){
+                    <li>
+                      <a
+                        href="#"
+                        class="dropdown-item d-flex align-items-center gap-2 rounded-2"
+                      >
+                        <i class="bi bi-speedometer2 text-primary"></i>
+                        <span>Order Management</span>
+                      </a>
+                    </li>
                     <li>
                       <a routerLink="{{routePaths.MENU_MANAGEMENT}}"class="dropdown-item d-flex align-items-center gap-2 rounded-2">
                         <i class="bi bi-list-ul text-primary"></i>
                         <span>Menu Management</span>
                       </a>
                     </li>
-                  }                  
-                  <li>
-                    <hr class="dropdown-divider my-2" />
-                  </li>
+                     <li>
+                      <hr class="dropdown-divider my-2" />
+                    </li>
+                  }
                   <li>
                     <button class="dropdown-item d-flex align-items-center gap-2 text-danger rounded-2" (click)="onLogout()">
                       <i class="bi bi-box-arrow-right"></i>
