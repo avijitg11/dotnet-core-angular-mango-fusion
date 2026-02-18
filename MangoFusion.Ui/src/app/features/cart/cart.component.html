@@ -10,7 +10,7 @@
                     Looks like you haven't added any items yet.
                 </p>
                 <a routerLink="{{routePaths.HOME}}" class="btn btn-primary btn-lg">
-                Browse Menu
+                    Browse Menu
                 </a>
             </div>
         </div>
@@ -70,14 +70,14 @@
                                         <div class="col-12">
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" id="pickUpName" 
-                                                formControlName="fullName" autocomplete="off" (blur)="onBlur('fullName')" placeholder="Full Name" />
+                                                formControlName="pickUpName" autocomplete="off" (blur)="onBlur('pickUpName')" placeholder="Full Name" />
                                                 <label for="pickUpName">Full Name <span style="color: red;">*</span></label>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-floating">
                                                 <input type="tel" class="form-control" id="pickUpPhoneNumber" 
-                                                formControlName="phoneNumber" autocomplete="off" (blur)="onBlur('phoneNumber')" placeholder="Phone Number" />
+                                                formControlName="pickUpPhoneNumber" autocomplete="off" (blur)="onBlur('pickUpPhoneNumber')" placeholder="Phone Number" />
                                                 <label for="pickUpPhoneNumber">
                                                     Phone Number <span style="color: red;">*</span>
                                                 </label>
@@ -86,7 +86,7 @@
                                         <div class="col-12">
                                             <div class="form-floating">
                                                 <input type="email" class="form-control" id="pickUpEmail" 
-                                                formControlName="email" autocomplete="off" (blur)="onBlur('email')" placeholder="Email" />
+                                                formControlName="pickUpEmail" autocomplete="off" (blur)="onBlur('pickUpEmail')" placeholder="Email" />
                                                 <label for="pickUpEmail">Email Address <span style="color: red;">*</span></label>
                                             </div>
                                         </div>
@@ -94,7 +94,7 @@
                                 </div>                            
                                 <div class="d-grid">
                                     <button class="btn btn-primary btn-lg" type="submit" [disabled]="pickupDetailsForm.invalid">
-                                        @if(isShowSpinner()){
+                                        @if(showSpinner()){
                                             <span class="spinner-border spinner-border-sm me-2"></span> Processing...
                                         }
                                         @else {

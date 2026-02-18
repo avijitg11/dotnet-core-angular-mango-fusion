@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from "@angular/core";
+import { Component, computed, DestroyRef, inject, signal } from "@angular/core";
 import { CartService } from "../../core/services/cart.service";
 import { RouterLink } from "@angular/router";
 import { RoutePaths } from "../../shared/models/route.path";
@@ -7,7 +7,10 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import { PickupDetails } from "../../shared/models/pickup.details";
 import { ToastrService } from "ngx-toastr";
 import { AuthService } from "../../core/services/auth.service";
-
+import { OrderService } from "../../core/services/order.service";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import Swal from 'sweetalert2';
+import { OrderCreate, OrderDetailsDTO } from "../../shared/models/order.create";
 
 @Component({
     selector:'app-cart',
@@ -16,23 +19,25 @@ import { AuthService } from "../../core/services/auth.service";
     imports:[RouterLink,CartItemComponent,ReactiveFormsModule]
 })
 export class CartComponent{
+    private destroyRef = inject(DestroyRef);
     private toastr = inject(ToastrService);
-    authService = inject(AuthService); 
+    private authService = inject(AuthService); 
+    private orderService = inject(OrderService);
     cartService = inject(CartService);
     authState = this.authService.authState;
     routePaths = RoutePaths;
-    isShowSpinner = signal(false);
+    showSpinner = signal(false);
     pickupDetailsForm: FormGroup;
 
     constructor(){
         const auth = this.authState();
-        const fullName = auth.isAuthenticated ? auth.user?.fullname ?? '' : '';
-        const email = auth.isAuthenticated ? auth.user?.email ?? '' : '';
+        const pickUpName = auth.isAuthenticated ? auth.user?.fullname ?? '' : '';
+        const pickUpEmail = auth.isAuthenticated ? auth.user?.email ?? '' : '';
 
         this.pickupDetailsForm = new FormGroup({
-            fullName: new FormControl(fullName,Validators.required),
-            phoneNumber: new FormControl('',[Validators.required,Validators.pattern(/^\+?[1-9]\d{7,14}$/)]),
-            email: new FormControl(email,[Validators.required,Validators.email])
+            pickUpName: new FormControl(pickUpName,Validators.required),
+            pickUpPhoneNumber: new FormControl('',[Validators.required,Validators.pattern(/^\+?[1-9]\d{7,14}$/)]),
+            pickUpEmail: new FormControl(pickUpEmail,[Validators.required,Validators.email])
         });
     }
     
@@ -51,11 +56,73 @@ export class CartComponent{
     );
 
     onClearCart(){
-        this.cartService.clearCart();
+        this.cartService.clearCart(true);
     }
 
     onSubmit(){
-        console.log(this.pickupDetailsForm.value);
+        this.showSpinner.set(true);
+        const auth = this.authState();
+        const applicationUserId = auth.isAuthenticated ? auth.user?.id ?? '' : '';
+        
+        let OrderDetailsDTO : OrderDetailsDTO[] = [];
+
+        this.cartService.cartItemList().forEach(item => {
+            let orderItem : OrderDetailsDTO = {
+                menuItemId: item.id,
+                quantity: item.quantity,
+                itemName: item.name,
+                price: item.price,
+            }
+            OrderDetailsDTO.push(orderItem);
+        });
+
+        let order : OrderCreate = {
+            pickUpName: this.pickupDetailsForm.value.pickUpName,
+            pickUpPhoneNumber: this.pickupDetailsForm.value.pickUpPhoneNumber,
+            pickUpEmail: this.pickupDetailsForm.value.pickUpEmail,
+            applicationUserId: applicationUserId,
+            orderTotal: this.totalCartAmount(),
+            totalItem: this.totalCartItem(),
+            orderDetailsDTO: OrderDetailsDTO
+        };
+
+        console.log(order);
+        this.orderService.createOrder(order)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+            next:(response)=> {
+                if(response.isSuccess)
+                {
+                    Swal.fire({
+                        title : "Order placed!",
+                        text : "Order placed successfully!",
+                        icon: "success",
+                        confirmButtonColor: '#0d6efd'
+                    });
+                    this.cartService.clearCart(false);
+                }                                    
+            },
+            error:(err)=>{
+                let message = '';
+                if (err.status === 401) {
+                    message = "You are unauthorized.";
+                } else if (Array.isArray(err.error?.errorMessage)) {
+                    message = err.error.errorMessage.join(' | ');
+                } else {
+                    message = err.error?.errorMessage || "Something went wrong.";
+                }
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: message,
+                    confirmButtonColor: '#fd0d0d'
+                });
+                this.showSpinner.set(false);
+            },
+            complete:()=>{
+                this.showSpinner.set(false);
+            }
+        });
     }
 
     onBlur(formInput:string){
@@ -63,14 +130,14 @@ export class CartComponent{
         if (form?.invalid && form?.touched)
         {
             switch (formInput) {
-                case 'fullName':
-                    if (form.get('fullName')?.hasError('required')) {
+                case 'pickUpName':
+                    if (form.get('pickUpName')?.hasError('required')) {
                         this.toastr.error('Full name is required.', 'Error');
                     }
                     break;
 
-                case 'email':
-                    const emailCtrl = form.get('email');
+                case 'pickUpEmail':
+                    const emailCtrl = form.get('pickUpEmail');
                     if (emailCtrl?.hasError('required')) {
                         this.toastr.error('Email is required.', 'Error');
                     } else if (emailCtrl?.hasError('email')) {
@@ -78,12 +145,12 @@ export class CartComponent{
                     }
                     break;
 
-                case 'phoneNumber':
-                    const phoneCtrl = form.get('phoneNumber');
+                case 'pickUpPhoneNumber':
+                    const phoneCtrl = form.get('pickUpPhoneNumber');
                     if (phoneCtrl?.hasError('required')) {
                         this.toastr.error('Phone number is required.', 'Error');
                     }else if (phoneCtrl?.hasError('pattern')) {
-                        this.toastr.error('Invalid phone number format.', 'Error');
+                        this.toastr.error('Invalid phone number. Required format (+91XXXXXXXXXX).', 'Error');
                     }
                     break;
             }

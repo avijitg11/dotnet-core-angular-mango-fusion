@@ -11,7 +11,8 @@ export const AuthInterceptor: HttpInterceptorFn = (request, next) => {
     return next(request);
   }
 
-  if (request.url.includes('api/MenuItem') && request.method !== 'GET') {
+  if ((request.url.includes('api/MenuItem') && request.method !== 'GET') 
+    || request.url.includes('api/OrderHeader')) {
     const modifiedReq = request.clone({
         setHeaders: {
             Authorization: `Bearer ${authState.token}`

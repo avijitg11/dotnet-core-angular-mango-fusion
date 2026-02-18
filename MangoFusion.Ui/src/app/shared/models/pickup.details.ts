@@ -1,5 +1,5 @@
 export type PickupDetails = {
-    fullName:string,
-    phoneNumber:string,
-    email:string
+    pickUpName:string;
+    pickUpPhoneNumber:string;
+    pickUpEmail:string;
 }

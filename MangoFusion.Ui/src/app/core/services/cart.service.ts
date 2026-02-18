@@ -91,13 +91,15 @@ export class CartService {
         });
     }
 
-    clearCart(){
+    clearCart(showToastr:boolean){
         this.cartItemList.set([]);
         localStorage.removeItem(this.storageKey);
-        this.toastr.success(
-            `Cart clear successfully.`,
-            'Success'
-        );
+        if(showToastr){
+            this.toastr.success(
+                `Cart clear successfully.`,
+                'Success'
+            );
+        }        
     }
 
     private loadFromStorage(): CartItem[] {
