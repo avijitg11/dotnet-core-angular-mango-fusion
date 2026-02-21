@@ -16,15 +16,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mainNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                My Orders
-              </a>
-            </li>
-          </ul>
-          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">           
-
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
             <li class="nav-item me-lg-2">
               <a routerLink="{{routePaths.CART}}" class='nav-link position-relative d-flex align-items-center justify-content-center bg-primary-subtle border-0 rounded-circle'
                 style="width:44px;height:44px">
@@ -51,22 +43,30 @@
                   
                   @if(authState().user?.role === userRoles[1]){
                     <li>
-                      <a
-                        href="#"
-                        class="dropdown-item d-flex align-items-center gap-2 rounded-2"
-                      >
+                      <a routerLink="{{routePaths.ORDER_MANAGEMENT}}"
+                        class="dropdown-item d-flex align-items-center gap-2 rounded-2">
                         <i class="bi bi-speedometer2 text-primary"></i>
                         <span>Order Management</span>
                       </a>
                     </li>
                     <li>
-                      <a routerLink="{{routePaths.MENU_MANAGEMENT}}"class="dropdown-item d-flex align-items-center gap-2 rounded-2">
+                      <a routerLink="{{routePaths.MENU_MANAGEMENT}}" 
+                      class="dropdown-item d-flex align-items-center gap-2 rounded-2">
                         <i class="bi bi-list-ul text-primary"></i>
                         <span>Menu Management</span>
                       </a>
                     </li>
                      <li>
                       <hr class="dropdown-divider my-2" />
+                    </li>
+                  }
+                  @else if(authState().user?.role === userRoles[0]){
+                    <li>
+                      <a routerLink="{{routePaths.MY_ORDERS}}"
+                        class="dropdown-item d-flex align-items-center gap-2 rounded-2">
+                        <i class="bi bi-speedometer2 text-primary"></i>
+                        <span>My Orders</span>
+                      </a>
                     </li>
                   }
                   <li>
@@ -80,12 +80,12 @@
             }
             @else {
               <li class="nav-item">
-                <a routerLink="{{routePaths.LOGIN}}" class="nav-link">
+                <a routerLink="{{routePaths.ACCOUNT+'/'+routePaths.LOGIN}}" class="nav-link">
                   Login
                 </a>
               </li>
               <li class="nav-item">
-                <a routerLink="{{routePaths.REGISTER}}" class="nav-link">
+                <a routerLink="{{routePaths.ACCOUNT+'/'+routePaths.REGISTER}}" class="nav-link">
                   Register
                 </a>
               </li>

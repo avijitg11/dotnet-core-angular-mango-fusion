@@ -1,5 +1,6 @@
 export const RoutePaths = {
     HOME: "",
+    ACCOUNT:"account",
     LOGIN: "login",
     REGISTER: "register",
     CART: "cart",
@@ -8,5 +9,6 @@ export const RoutePaths = {
     MENU_MANAGEMENT: "menu-management",
     MENU_DETAILS:"menu-details",
     ORDER_MANAGEMENT: "order-management",
+    MY_ORDERS:"my-orders",
     NOT_FOUND: "**"
 }
