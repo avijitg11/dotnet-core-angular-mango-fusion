@@ -28,7 +28,11 @@ export class OrderService{
     }
 
     getOrderById(id:number):Observable<Response>{
-        return this.http.get<Response>(this.baseUrl + "api/OrderHeader" + id);
+        return this.http.get<Response>(this.baseUrl + "api/OrderHeader/?orderId=" + id);
+    }
+
+    getOrderByUserId(userId:string):Observable<Response>{
+        return this.http.get<Response>(this.baseUrl + "api/OrderHeader/?userId=" + userId);
     }
 
     createOrder(order:OrderCreate):Observable<Response>{

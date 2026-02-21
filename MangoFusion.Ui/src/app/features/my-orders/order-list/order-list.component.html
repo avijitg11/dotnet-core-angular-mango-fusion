@@ -1,0 +1,31 @@
+<td>
+    <strong>#{{order().orderHeaderId}}</strong>
+</td>
+<td>
+   <span>{{order().orderDate | date : "dd-MMM-yyyy hh:MM a" }}</span>
+</td>
+<td>
+    <div class="small">
+        <div class="fw-semibold"><i class="bi bi-person text-danger"></i> {{order().pickUpName}}</div>
+        <div><i class="bi bi-envelope text-danger"></i> {{order().pickUpEmail}}</div>
+        <div><i class="bi bi-telephone text-danger"></i> {{order().pickUpPhoneNumber}}</div>
+    </div>
+</td>
+<td>
+    <strong class="text-primary">{{order().totalItem}}</strong>
+</td>
+<td>
+    <strong class="text-success">₹ {{order().orderTotal.toFixed(2)}}</strong>
+</td>
+<td>
+   <strong class="badge text-dark bg-{{orderStatusColor()}}">{{order().status}}</strong>
+</td>
+<td>
+    <div class="btn-group" role="group">
+        <button class="btn btn-sm btn-outline-success" title="Edit" (click)="onEdit()">
+            <i class="bi bi-pencil"></i>
+        </button>
+    </div>
+</td>
+
+
