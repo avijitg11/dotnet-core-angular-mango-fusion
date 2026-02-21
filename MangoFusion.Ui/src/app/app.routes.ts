@@ -40,5 +40,5 @@ export const routes: Routes = [
       canActivate: [customerGuard]},
 
     {path:RoutePaths.NOT_FOUND,loadComponent: () =>
-      import('./features/home/home.component').then(m => m.HomeComponent)}
+      import('./features/not-found/not-found.component').then(m => m.NotFoundComponent)}
 ];
