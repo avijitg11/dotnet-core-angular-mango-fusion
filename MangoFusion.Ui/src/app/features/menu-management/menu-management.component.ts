@@ -12,7 +12,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 })
 export class MenuManagementComponent implements OnInit {
     private destroyRef = inject(DestroyRef);
-    menuItemService = inject(MenuItemService);
+    private menuItemService = inject(MenuItemService);
     menuItems = signal<MenuItem[]>([]);
     isError = signal(false);
     showLoader = signal(true);

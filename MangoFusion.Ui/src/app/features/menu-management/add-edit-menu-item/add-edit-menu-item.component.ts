@@ -17,6 +17,7 @@ import { environment } from "../../../../environments/environment";
 export class AddEditMenuItemComponent {
     private destroyRef = inject(DestroyRef);
     private toastr = inject(ToastrService);
+    private menuItemService = inject(MenuItemService);
     private baseUrl : string =  environment.apiUrl;
     isModalShow = output<boolean>();
     isLoadMenuItems = output<boolean>();
@@ -24,8 +25,7 @@ export class AddEditMenuItemComponent {
     specialTags = SpecialTags;
     showSpinner = signal(false);
     menuItemForm: FormGroup;
-    imagePreview = signal<string | ArrayBuffer | null>(null);
-    menuItemService = inject(MenuItemService);
+    imagePreview = signal<string | ArrayBuffer | null>(null);    
     menuItemId = input.required<number>();
 
     constructor()

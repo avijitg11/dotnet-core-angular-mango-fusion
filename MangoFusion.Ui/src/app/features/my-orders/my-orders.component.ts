@@ -15,7 +15,7 @@ import { MyOrderDetailsComponent } from "./my-order-details/my-order-details.com
 export class MyOrdersComponent implements OnInit{
     private destroyRef = inject(DestroyRef);
     private authService = inject(AuthService);
-    orderService = inject(OrderService);
+    private orderService = inject(OrderService);
     orders = signal<Order[]>([]);
     isError = signal(false);
     showLoader = signal(true);

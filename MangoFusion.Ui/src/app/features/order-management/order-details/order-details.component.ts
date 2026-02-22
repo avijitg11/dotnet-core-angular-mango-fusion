@@ -17,13 +17,13 @@ import { environment } from "../../../../environments/environment";
 })
 export class OrderDetailsComponent{
     private destroyRef = inject(DestroyRef);
+    private orderService = inject(OrderService);
     isModalShow = output<boolean>();
     orderDetails = input.required<Order>();
     isLoadOrders = output<boolean>();
     orderStatus = OrderStatus;
     selectedStatus:string = '';
     showSpinner = signal(false);
-    orderService = inject(OrderService);
     baseUrl = environment.apiUrl;
     
     orderStatusColor = computed(() => {

@@ -4,12 +4,14 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MenuItem } from "../../shared/models/menu.item";
 import { MenuItemComponent } from "./menu-item/menu-item.component";
 import { Category } from "../../shared/models/category";
+import { RouterLink } from "@angular/router";
+import { RoutePaths } from "../../shared/models/route.path";
 
 @Component({
     selector:'app-home',
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
-    imports:[MenuItemComponent]
+    imports:[MenuItemComponent,RouterLink]
 })
 export class HomeComponent implements OnInit {
     private destroyRef = inject(DestroyRef);
@@ -20,6 +22,7 @@ export class HomeComponent implements OnInit {
     categoryList = Category;
     selectedCategory = signal('');
     searchText = signal('');
+    routePaths = RoutePaths;
 
     ngOnInit(): void {
         this.menuItemService.getMenuItems()
