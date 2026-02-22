@@ -7,7 +7,6 @@ import { OrderConfirmedDetails } from "../../shared/models/order.confirmed.detai
 @Component({
     selector:'app-order-conformation',
     templateUrl:'./order-conformation.component.html',
-    styleUrls:['./order-conformation.component.css'],
     imports:[RouterLink]
 })
 export class OrderConformationComponent implements OnInit{

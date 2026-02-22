@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from "@angular/core";
+import { Component, DestroyRef, effect, inject, OnInit, signal } from "@angular/core";
 import { environment } from "../../../environments/environment";
 import { MenuItem } from "../../shared/models/menu.item";
 import { MenuItemService } from "../../core/services/menuitem.service";
@@ -8,12 +8,12 @@ import { ToastrService } from "ngx-toastr";
 import { RoutePaths } from "../../shared/models/route.path";
 import { CartItem } from "../../shared/models/cart.item";
 import { CartService } from "../../core/services/cart.service";
+import { RatingComponent } from "../../shared/components/rating/rating.component";
 
 @Component({
     selector:'app-menu-details',
     templateUrl:'./menu-details.component.html',
-    styleUrls:['./menu-details.component.css'],
-    imports:[RouterLink]
+    imports:[RouterLink,RatingComponent]
 })
 export class MenuDetailsComponent implements OnInit{
     private destroyRef = inject(DestroyRef);
@@ -22,6 +22,7 @@ export class MenuDetailsComponent implements OnInit{
     private route = inject(ActivatedRoute);
     private toastr = inject(ToastrService);
     private price = 0;
+    rating = signal(0);
     baseUrl = environment.apiUrl;
     routePaths = RoutePaths;
     isItemNotFound = signal(false);
@@ -38,7 +39,16 @@ export class MenuDetailsComponent implements OnInit{
         description:'',
         rating:0,
         specialTag:''
-    });;
+    });   
+
+    constructor() {
+        effect(() => {
+            const detail = this.menuItem();
+            this.rating.set(
+                detail?.rating == null ? 0 : +detail.rating
+            );
+        });
+    }
     
     ngOnInit(): void {
         const id = Number(this.route.snapshot.paramMap.get('id') ?? 0);
@@ -104,7 +114,8 @@ export class MenuDetailsComponent implements OnInit{
             image:this.menuItem().image,
             price:this.menuItem().price,
             quantity:this.quantity(),
-            isQuantityFixed:true
+            isQuantityFixed:true,
+            rating:this.menuItem().rating
         }
         this.cartService.addToCart(cartItem);
     }

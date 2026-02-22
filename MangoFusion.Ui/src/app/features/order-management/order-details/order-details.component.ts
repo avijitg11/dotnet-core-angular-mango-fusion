@@ -13,7 +13,6 @@ import { environment } from "../../../../environments/environment";
 @Component({
     selector:'app-order-details',
     templateUrl:'./order-details.component.html',
-    styleUrls:['./order-details.component.css'],
     imports:[DatePipe,FormsModule]
 })
 export class OrderDetailsComponent{

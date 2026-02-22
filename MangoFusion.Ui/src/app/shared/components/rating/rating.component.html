@@ -1,0 +1,10 @@
+@for (star of stars(); track $index) {
+  <span (click)="rate($index)" style="cursor:pointer;font-size:18px;" class="text-warning m-1">
+      @if($index < value()){
+        <i class="bi bi-star-fill"></i>
+      }
+      @else {
+        <i class="bi bi-star"></i>
+      }
+  </span>
+}

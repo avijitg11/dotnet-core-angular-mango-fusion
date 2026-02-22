@@ -1,0 +1,75 @@
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}
+
+.item-1{
+    min-height:600px;
+    height:600px;
+    background:linear-gradient(135deg, #c66bff 0%, #ad52ee 25%, #bc6bff 50%, #9630d6 75%, #7439b3 100%);
+    position:relative
+}
+
+.item-2{
+    min-height:600px;
+    height:600px;
+    background:linear-gradient(135deg, #ff6b6b 0%, #ee5a52 25%, #ff6b6b 50%, #d63031 75%, #b33939 100%);    
+    position:relative
+}
+
+.item-3{
+    min-height:600px;
+    height:600px;
+    background:linear-gradient(135deg, #6b6eff 0%, #525aee 25%, #6b7cff 50%, #3038d6 75%, #3943b3 100%);
+    position:relative
+}
+
+.animation{
+    position:absolute;
+    top:10%;
+    right:10%;
+    width:100px;
+    height:100px;
+    background:rgba(255, 193, 7, 0.1);
+    border-radius:50%;
+    filter:blur(20px);
+    animation:float 6s ease-in-out infinite
+}
+
+.animation-1{
+    position: absolute;
+    bottom: 20%;
+    left: 15%;
+    width: 60px;
+    height: 60px;
+    background: rgba(40, 167, 69, 0.1);
+    border-radius: 50%;
+    filter: blur(15px);
+    animation: float 4s ease-in-out infinite reverse
+}
+
+
+.subtle-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;right: 0;
+    bottom: 0;
+    background:rgba(0,0,0,0.1);
+    pointer-events: none
+}
+
+.flex-wrap.cls{
+    background: linear-gradient(45deg, #ffc107, #ffb300);
+    border: none;
+    transition: all 0.3s ease
+}
+
+.bg-gradient-cls{
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2)
+}

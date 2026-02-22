@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 @Component({
     selector:'app-register',
     templateUrl: './register.component.html',
-    styleUrls: ['./register.component.css'],
     imports: [RouterLink,ReactiveFormsModule]
 })
 export class RegisterComponent{

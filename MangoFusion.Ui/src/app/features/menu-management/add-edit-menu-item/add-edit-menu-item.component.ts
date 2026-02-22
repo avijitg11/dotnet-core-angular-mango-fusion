@@ -12,7 +12,6 @@ import { environment } from "../../../../environments/environment";
 @Component({
     selector:'app-add-edit-menu-item',
     templateUrl: './add-edit-menu-item.component.html',
-    styleUrls: ['./add-edit-menu-item.component.css'],
     imports: [ReactiveFormsModule]
 })
 export class AddEditMenuItemComponent {

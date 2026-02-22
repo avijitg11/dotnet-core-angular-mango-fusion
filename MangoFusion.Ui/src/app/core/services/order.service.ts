@@ -6,6 +6,7 @@ import { OrderCreate } from "../../shared/models/order.create";
 import { OrderUpdate } from "../../shared/models/order.update";
 import { Response } from '../../shared/models/response.model';
 import { OrderConfirmedDetails } from "../../shared/models/order.confirmed.details";
+import { OrderDetails } from "../../shared/models/order.details";
 
 @Injectable({
     providedIn:'root'
@@ -45,6 +46,10 @@ export class OrderService{
 
     setOrderConfirmedDetailsDefault(){
         this.orderConfirmedDetails.set(this.orderConfirmedDetailsDefault);
+    }
+
+    updateOrderDetails(order:OrderDetails):Observable<Response>{
+        return this.http.put<Response>(this.baseUrl + "api/OrderDetails/" + order.orderDetailId, order);  
     }
 }
 

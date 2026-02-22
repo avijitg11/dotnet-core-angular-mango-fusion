@@ -1,14 +1,15 @@
-import { Component, DestroyRef, inject, input, output } from "@angular/core";
+import { Component, DestroyRef, effect, inject, input, output, signal } from "@angular/core";
 import { MenuItem } from "../../../shared/models/menu.item";
 import { environment } from "../../../../environments/environment";
 import Swal from 'sweetalert2';
 import { MenuItemService } from "../../../core/services/menuitem.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { RatingComponent } from "../../../shared/components/rating/rating.component";
 
 @Component({
     selector:'[app-menu-item]',
     templateUrl: './menu-item.component.html',
-    styleUrls: ['./menu-item.component.css']
+    imports:[RatingComponent]
 })
 export class MenuItemComponent{
     menuItem = input.required<MenuItem>();
@@ -17,6 +18,16 @@ export class MenuItemComponent{
     isLoadMenuItems = output<boolean>();
     private destroyRef = inject(DestroyRef);
     menuItemId = output<number>();
+    rating = signal(0);
+
+    constructor() {
+        effect(() => {
+            const detail = this.menuItem();
+            this.rating.set(
+                detail?.rating == null ? 0 : +detail.rating
+            );
+        });
+    }
 
     onDelete(){
         Swal.fire({
