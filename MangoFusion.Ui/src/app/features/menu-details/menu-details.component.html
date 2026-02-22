@@ -43,7 +43,7 @@
                 </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    NAME
+                    {{menuItem().name}}
                 </li>
             </ol>
         </nav>
@@ -71,7 +71,9 @@
                     <div class="mb-4">
                         <div class="d-flex align-items-start justify-content-between mb-3">
                             <div>
-                                <h1 class="display-6 fw-bold mb-2 text-dark">{{menuItem().name}}</h1>
+                                <h1 class="display-6 fw-bold mb-2 text-dark">
+                                    {{menuItem().name}} <app-rating [(value)]="rating" [disabled]="true"></app-rating>
+                                </h1>                                
                                 <div class="d-flex align-items-center gap-3 mb-2">
                                     <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-3 py-2 fs-6">
                                         {{menuItem().category}}

@@ -6,8 +6,7 @@ import { CartService } from "../../../core/services/cart.service";
 
 @Component({
     selector:'div[app-cart-item]',
-    templateUrl:'./cart-item.component.html',
-    styleUrls:['./cart-item.component.css']
+    templateUrl:'./cart-item.component.html'
 })
 export class CartItemComponent{
     private cartService = inject(CartService);

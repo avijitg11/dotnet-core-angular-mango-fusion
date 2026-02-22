@@ -5,13 +5,12 @@ import { OrderService } from "../../core/services/order.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { AuthService } from "../../core/services/auth.service";
 import { OrderListComponent } from "./order-list/order-list.component";
-import { RatingComponent } from "./rating/rating.component";
+import { MyOrderDetailsComponent } from "./my-order-details/my-order-details.component";
 
 @Component({
     selector:'app-my-orders',
     templateUrl: './my-orders.component.html',
-    styleUrls: ['./my-orders.component.css'],
-    imports:[OrderListComponent,RatingComponent]
+    imports:[OrderListComponent,MyOrderDetailsComponent]
 })
 export class MyOrdersComponent implements OnInit{
     private destroyRef = inject(DestroyRef);
@@ -81,13 +80,6 @@ export class MyOrdersComponent implements OnInit{
             return matchStatus;
         });
     });
-
-
-    reloadOrders(event:boolean){
-        if(event){
-            this.loadOrders();
-        }
-    }
 
     hideModal(event:boolean){
         this.isModalShow.set(event);

@@ -8,18 +8,18 @@ export const OrderStatus = {
 export const OrderStatusOptions = [
     {
         value: OrderStatus.Confirmed,
-        color: "warning"
+        color: "bg-warning"
     },
     {
         value: OrderStatus.ReadyForPickup,
-        color: "info"
+        color: "bg-info"
     },
     {
         value: OrderStatus.Completed,
-        color: "success"
+        color: "bg-success"
     },
     {
         value: OrderStatus.Cancelled,
-        color: "danger"
+        color: "bg-danger"
     }
 ]

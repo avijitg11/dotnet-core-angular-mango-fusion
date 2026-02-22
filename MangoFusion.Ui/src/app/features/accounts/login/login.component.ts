@@ -11,7 +11,6 @@ import Swal from 'sweetalert2';
 @Component({
     selector:'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
     imports: [RouterLink,ReactiveFormsModule]
 })
 export class LoginComponent{ 

@@ -6,7 +6,6 @@ import { OrderStatusOptions } from "../../../shared/models/order.status";
 @Component({
     selector:'[app-order]',
     templateUrl: './order.component.html',
-    styleUrls: ['./order.component.css'],
     imports:[DatePipe]
 })
 export class OrderComponent {

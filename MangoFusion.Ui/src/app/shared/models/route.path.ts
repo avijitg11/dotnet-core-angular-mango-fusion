@@ -4,7 +4,7 @@ export const RoutePaths = {
     LOGIN: "login",
     REGISTER: "register",
     CART: "cart",
-    CHECKOUT: "checkout",
+    //CHECKOUT: "checkout",
     ORDER_CONFORMATION: "order-conformation",
     MENU_MANAGEMENT: "menu-management",
     MENU_DETAILS:"menu-details",

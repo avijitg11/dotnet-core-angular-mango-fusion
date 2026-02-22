@@ -8,7 +8,6 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 @Component({
     selector:'app-menu-management',
     templateUrl: './menu-management.component.html',
-    styleUrls: ['./menu-management.component.css'],
     imports:[MenuItemComponent,AddEditMenuItemComponent]
 })
 export class MenuManagementComponent implements OnInit {

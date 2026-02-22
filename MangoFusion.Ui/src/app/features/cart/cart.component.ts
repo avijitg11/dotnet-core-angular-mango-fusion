@@ -14,7 +14,6 @@ import { OrderCreate, OrderDetailsDTO } from "../../shared/models/order.create";
 @Component({
     selector:'app-cart',
     templateUrl:'./cart.component.html',
-    styleUrls:['./cart.component.css'],
     imports:[RouterLink,CartItemComponent,ReactiveFormsModule]
 })
 export class CartComponent{

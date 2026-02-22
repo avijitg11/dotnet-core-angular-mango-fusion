@@ -9,7 +9,6 @@ import { OrderDetailsComponent } from "./order-details/order-details.component";
 @Component({
     selector:'app-order-management',
     templateUrl: './order-management.component.html',
-    styleUrls: ['./order-management.component.css'],
     imports:[OrderComponent,OrderDetailsComponent]
 })
 export class OrderManagementComponent implements OnInit {

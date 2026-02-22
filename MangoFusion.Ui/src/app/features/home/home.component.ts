@@ -8,7 +8,6 @@ import { Category } from "../../shared/models/category";
 @Component({
     selector:'app-home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css'],
     imports:[MenuItemComponent]
 })
 export class HomeComponent implements OnInit {
