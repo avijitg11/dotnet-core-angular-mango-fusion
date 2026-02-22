@@ -1,4 +1,4 @@
-@if(cartService.cartItemList().length === 0){
+@if(cartItemList().length === 0){
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                     </div>
-                    @for (item of cartService.cartItemList(); track item.id){
+                    @for (item of cartItemList(); track item.id){
                         <div app-cart-item [cartItem]="item"></div>     
                     }                           
                     <div class="p-4 border-top border-bottom">

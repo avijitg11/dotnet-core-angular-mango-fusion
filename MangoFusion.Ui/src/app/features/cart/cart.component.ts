@@ -22,7 +22,8 @@ export class CartComponent{
     private authService = inject(AuthService); 
     private orderService = inject(OrderService);
     private router = inject(Router); 
-    cartService = inject(CartService);
+    private cartService = inject(CartService);
+    cartItemList = this.cartService.cartItemList;
     authState = this.authService.authState;
     routePaths = RoutePaths;
     showSpinner = signal(false);

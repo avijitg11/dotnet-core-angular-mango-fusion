@@ -12,11 +12,11 @@ import { RatingComponent } from "../../../shared/components/rating/rating.compon
     imports:[RatingComponent]
 })
 export class MenuItemComponent{
+    private menuItemService = inject(MenuItemService);
+    private destroyRef = inject(DestroyRef);
     menuItem = input.required<MenuItem>();
     baseUrl = environment.apiUrl;
-    menuItemService = inject(MenuItemService);
     isLoadMenuItems = output<boolean>();
-    private destroyRef = inject(DestroyRef);
     menuItemId = output<number>();
     rating = signal(0);
 

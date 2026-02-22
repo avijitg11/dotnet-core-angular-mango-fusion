@@ -68,7 +68,7 @@ export class RegisterComponent{
                         confirmButtonColor: '#0d6efd'
                     });
                     this.showSpinner.set(false);
-                    this.router.navigate(['/'+this.routePaths.LOGIN]);
+                    this.router.navigate(['/'+this.routePaths.ACCOUNT+'/'+this.routePaths.LOGIN]);
                 }
             },
             error:(err)=>{

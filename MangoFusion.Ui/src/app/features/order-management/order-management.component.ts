@@ -13,7 +13,7 @@ import { OrderDetailsComponent } from "./order-details/order-details.component";
 })
 export class OrderManagementComponent implements OnInit {
     private destroyRef = inject(DestroyRef);
-    orderService = inject(OrderService);
+    private orderService = inject(OrderService);
     orders = signal<Order[]>([]);
     isError = signal(false);
     showLoader = signal(true);

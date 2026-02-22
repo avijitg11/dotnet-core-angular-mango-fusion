@@ -14,7 +14,7 @@ import { RatingComponent } from "../../../shared/components/rating/rating.compon
     imports: [RouterLink,RatingComponent]
 })
 export class MenuItemComponent{
-    cartService = inject(CartService);
+    private cartService = inject(CartService);
     menuItem = input.required<MenuItem>();
     baseUrl = environment.apiUrl;
     routePaths = RoutePaths;

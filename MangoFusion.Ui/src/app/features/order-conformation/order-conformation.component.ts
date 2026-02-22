@@ -10,8 +10,8 @@ import { OrderConfirmedDetails } from "../../shared/models/order.confirmed.detai
     imports:[RouterLink]
 })
 export class OrderConformationComponent implements OnInit{
+    private orderService = inject(OrderService);
     routePaths = RoutePaths;
-    orderService = inject(OrderService);
     orderConfirmedDetails : OrderConfirmedDetails = this.orderService.orderConfirmedDetails();
     
     ngOnInit(): void {

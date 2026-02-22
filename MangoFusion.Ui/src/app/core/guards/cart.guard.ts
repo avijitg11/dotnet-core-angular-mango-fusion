@@ -11,7 +11,7 @@ export const cartGuard : CanActivateFn = (route, state) => {
     const routePaths = RoutePaths;
     
     if(!authState.isAuthenticated){
-        router.navigate([routePaths.LOGIN]);
+        router.navigate([routePaths.ACCOUNT+'/'+routePaths.LOGIN]);
         return of(false);
     }
     

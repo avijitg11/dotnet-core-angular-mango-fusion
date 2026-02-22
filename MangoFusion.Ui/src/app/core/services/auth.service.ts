@@ -92,46 +92,6 @@ export class AuthService{
             return this.defaultAuthState;
         }
     }
-
-    // getInitialAuthState() : AuthState {
-    //     const userToken = localStorage.getItem(LocalStorage.USER_TOKEN);
-    //     const userInfo = localStorage.getItem(LocalStorage.USER_INFO);
-    //     let user: UserInfo | null = null;
-
-    //     if(!userToken || userToken === 'undefined' || userToken === null || userToken === 'null' || isTokenExpired(userToken)){
-    //         localStorage.removeItem(LocalStorage.USER_TOKEN);
-    //         localStorage.removeItem(LocalStorage.USER_INFO);
-            
-    //         let authState : AuthState = {
-    //             isAuthenticated : false,
-    //             token : null,
-    //             user : null
-    //         };            
-
-    //         return authState;
-    //     }
-
-    //     if(userInfo || userInfo === 'undefined' || userInfo === null || userInfo === 'null'){
-    //         try{
-    //             user = JSON.parse(userInfo===null?'':userInfo);
-    //         }
-    //         catch
-    //         {
-    //             user = getUserInfoFromToken(userToken);
-    //             if(user){
-    //                 localStorage.setItem(LocalStorage.USER_INFO,JSON.stringify(user));
-    //             }
-    //         }
-    //     }
-
-    //     let authState : AuthState = {
-    //         isAuthenticated : !!userToken && !!user,
-    //         token : userToken,
-    //         user
-    //     };
-        
-    //     return authState;
-    // }
 }
 
 
