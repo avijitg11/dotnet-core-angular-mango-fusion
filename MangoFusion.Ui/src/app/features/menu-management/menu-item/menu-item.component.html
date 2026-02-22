@@ -5,6 +5,7 @@
 </td>
 <td>
     <strong>{{menuItem().name}}</strong> <app-rating [(value)]="rating" [disabled]="true"></app-rating>
+    <span class="mb-1 fw-semibold small text-primary">{{rating().toFixed(1)}}</span>
     <br />
     <small class="text-muted">{{menuItem().description}}</small>
 </td>

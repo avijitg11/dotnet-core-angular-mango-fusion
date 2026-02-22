@@ -114,7 +114,8 @@ export class MenuDetailsComponent implements OnInit{
             image:this.menuItem().image,
             price:this.menuItem().price,
             quantity:this.quantity(),
-            isQuantityFixed:true
+            isQuantityFixed:true,
+            rating:this.menuItem().rating
         }
         this.cartService.addToCart(cartItem);
     }

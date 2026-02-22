@@ -75,6 +75,6 @@
         </div>
     </div> 
     @if(isModalShow()){
-        <app-my-order-details [orderDetails]="orderDetails()" (isModalShow)="hideModal($event)"></app-my-order-details>
+        <app-my-order-details [orderDetails]="orderDetails()" (isModalShow)="hideModal($event)" (loadOrders)="reloadOrder($event)"></app-my-order-details>
     }   
 </div>

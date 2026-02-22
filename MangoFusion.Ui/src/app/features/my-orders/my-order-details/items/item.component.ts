@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, effect, inject, input, signal } from "@angular/core";
+import { Component, computed, DestroyRef, effect, inject, input, output, signal } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { OrderService } from "../../../../core/services/order.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
@@ -24,6 +24,7 @@ export class ItemComponent{
     status = input.required<string>();
     orderStatus = OrderStatus;
     isDisabled = computed(() => this.status() !== this.orderStatus.Completed);
+    loadOrders = output<boolean>();
 
     constructor() {
         effect(() => {
@@ -51,6 +52,7 @@ export class ItemComponent{
                             `Order rating updated.`,
                             'Success'
                         );
+                        this.loadOrders.emit(true);
                     }
                 },
                 error:(err)=>{

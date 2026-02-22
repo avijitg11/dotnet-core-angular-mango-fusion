@@ -84,4 +84,9 @@ export class MyOrdersComponent implements OnInit{
     hideModal(event:boolean){
         this.isModalShow.set(event);
     }
+
+    reloadOrder(event:boolean){
+        if(event)
+            this.loadOrders();
+    }
 }

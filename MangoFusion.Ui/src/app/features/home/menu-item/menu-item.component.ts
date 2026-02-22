@@ -18,7 +18,6 @@ export class MenuItemComponent{
     menuItem = input.required<MenuItem>();
     baseUrl = environment.apiUrl;
     routePaths = RoutePaths;
-
     rating = signal(0);
 
     constructor() {
@@ -37,7 +36,8 @@ export class MenuItemComponent{
             image:this.menuItem().image,
             price:this.menuItem().price,
             quantity:1,
-            isQuantityFixed:false
+            isQuantityFixed:false,
+            rating:this.menuItem().rating
         }
         this.cartService.addToCart(cartItem);
     }

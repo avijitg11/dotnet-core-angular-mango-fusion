@@ -15,7 +15,9 @@ export class MyOrderDetailsComponent{
     isModalShow = output<boolean>();
     orderDetails = input.required<Order>();
     orderStatus = OrderStatus;
-    
+    loadOrders = output<boolean>();
+    isDisabled = computed(() => this.orderDetails().status !== this.orderStatus.Completed);
+
     orderStatusColor = computed(() => {
         const status = this.orderDetails().status;
         return OrderStatusOptions.find(s => s.value === status)?.color ?? '';
@@ -23,5 +25,9 @@ export class MyOrderDetailsComponent{
 
     hideModal(){
         this.isModalShow.emit(false);
-    }    
+    }  
+    
+    reloadOrder(event:boolean){
+        this.loadOrders.emit(event);
+    }
 }
